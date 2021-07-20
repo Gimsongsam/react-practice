@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 
 const getAverage = numbers => {
     console.log('평균값 계산 중..');
@@ -10,41 +10,47 @@ const getAverage = numbers => {
 const Average = () => {
     const [list, setList] = useState([]);
     const [number, setNumber] = useState('');
-    const v = []
-    list.forEach((value, index) => {
-        v.push(<li key={index}>{value}</li>)
-    })
+    const inputEl = useRef(null);
+    // const v = []
+    // list.forEach((value, index) => {
+    //     v.push(<li key={index}>{value}</li>)
+    // })
 
-    const onChange = e => {
+    const onChange = useCallback(e => {
         setNumber(e.target.value);
-    };
-    function onInsert2() {
-        const nextList = list.concat(parseInt(number));
-        setList(nextList);
-        setNumber('');
+    },[]); // 컴포넌트가 처음 렌더링될 때만 함수 생성
+    
+    // function onInsert2() {
+    //     const nextList = list.concat(parseInt(number));
+    //     setList(nextList);
+    //     setNumber('');
+    // }
 
-    }
-    const onInsert = e => {
+    const onInsert = useCallback(() => {
         const nextList = list.concat(parseInt(number));
         setList(nextList);
         setNumber('');
-    };
-    const getArray = () => {
-        return v;
-    }
+        inputEl.current.focus();
+        console.log(inputEl.current)
+    }, [number, list]); // number 혹은 list가 바뀌었을 때만 함수 생성
+
+    // const getArray = () => {
+    //     return v;
+    // }
 
     const avg = useMemo(() => getAverage(list), [list]);
     
     return (
         <div>
-            <input value={number} onChange={onChange} />
-            <button onClick={onInsert2}>등록</button>
+            <input value={number} onChange={onChange} ref={inputEl} />
+            <button onClick={onInsert}>등록</button>
             <ul>
-               {v}
-               
+               {list.map((value, index) => (
+                   <li key={index}>{value}</li>
+               ))}
             </ul>
             <div>
-                <b>평균값:</b> {getAverage(list)}
+                <b>평균값:</b> {avg}
             </div>
         </div>
     );
