@@ -15,4 +15,4 @@ const SassComponent = () => {
     );
 };
 
-export default SassComponent;
+export default SassComponent
