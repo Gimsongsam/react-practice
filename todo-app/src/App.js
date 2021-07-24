@@ -4,6 +4,7 @@ import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
 
 const App = () => {
+
   const [todos, setTodos] = useState([
     {
       id: 1,
@@ -40,11 +41,32 @@ const App = () => {
     [todos],
   );
 
+  const onRemove = useCallback(
+    id => { // id를 파라미터로 가져오기
+      setTodos(todos.filter(todo => todo.id !== id)); // 삭제할 id값과 일치하지 않는 id값만 배열에 넣기
+    },
+    [todos],
+  );
+
+  const onToggle = useCallback(
+    id => { // id값을 파라미터로 받아오기
+      setTodos(
+        todos.map( todo => 
+          todo.id === id ? {...todo, checked: !todo.checked} : todo,
+          // console.log(todo))
+          // 파라미터로 받아온 id값과 todo의 값이 같다면 새로운 객체를 생성 -> true
+          // 같지않다면 원래 상태의 값을 반환 -> false
+        )
+      );
+    },[todos],
+  );
+
   return (
     <TodoTemplate>
       <TodoInsert onInsert={onInsert} /> {/* onInsert 함수를 props 설정 */}
-      <TodoList todos={todos} /> {/* TodoList에게 props로 전달해준다 */}
+      <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} /> {/* TodoList에게 props로 전달해준다 */}
       {console.log(todos)}
+      {/* {console.log(item)} */}
     </TodoTemplate>
     
   );
