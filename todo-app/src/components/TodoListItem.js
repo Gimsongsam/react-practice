@@ -13,7 +13,7 @@ const TodoListItem = ({todo, onRemove, onToggle}) => { // 파라미터로 todoLi
 
     return (
         <div className="TodoListItem">
-            <div className={cn('checkbox', {checked})} onClick={() => onToggle(id)}> {/* checked의 값이 ture일때만 클래스를 부여 */}
+            <div className={cn('checkbox', {checked})} > {/* checked의 값이 ture일때만 클래스를 부여 */}
                 {checked ? <MdCheckBox onClick={() => onToggle(id)} /> : <MdCheckBoxOutlineBlank onClick={() => onToggle(id)} />} {/* checked의 값을 따라 체크박스의 모양을 부여 */}
                 <div className="text">{text}</div>
             </div>
@@ -24,4 +24,4 @@ const TodoListItem = ({todo, onRemove, onToggle}) => { // 파라미터로 todoLi
     );
 };
 
-export default TodoListItem;
+export default React.memo(TodoListItem);
