@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useReducer, useRef, useCallback} from 'react';
 import TodoTemplate from './components/TodoTemplate';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
@@ -15,9 +15,27 @@ function createBulkTodos(){
   return array;
 }
 
+function todoReducer(todos, action){   // 이전값과 액션 값 전달하기 위해 reduce 함수 사용
+  switch(action.type){
+    case 'INSERT': // 새로 추가
+      // {type: 'INSERT', todo:{id: 1, text: 'todo', checked: false}}
+      return todos.concat(action.todo);
+    case 'REMOVE': // 제거
+      // {type: 'REMOVE', id: 1}
+      return todos.filter(todo => todo.id !== action.id);
+    case 'TOGGLE': // 토글
+      // {type: 'REMOVE', id: 1}
+      return todos.map(todo =>
+        todo.id === action.id ? {...todo, checked: !todo.checked} : todo,
+        );
+      default:
+        return todos;
+  }
+}
+
 const App = () => {
 
-  const [todos, setTodos] = useState(createBulkTodos);
+  const [todos, dispatch] = useReducer(todoReducer, undefined, createBulkTodos);
 
   // 고윳값으로 사용될 id
   // ref를 사용하여 변수 담기
@@ -29,13 +47,13 @@ const App = () => {
         text,
         checked: false,
       };
-      setTodos(todos => todos.concat(todo)); // todos 배열에 새로운 todo 객체 추가
+      dispatch({type: 'INSERT', todo});
       nextId.current += 1; // nextId 1씩 더하기
       console.log(nextId) 
     },[]);
 
   const onRemove = useCallback(id => { // id를 파라미터로 가져오기
-      setTodos(todos => todos.filter(todo => todo.id !== id)); // 삭제할 id값과 일치하지 않는 id값만 배열에 넣기
+      dispatch({type: 'REMOVE', id})
     },[]);
 
   // const onRemove = useCallback(
@@ -51,14 +69,7 @@ const App = () => {
 
 
   const onToggle = useCallback(id => { // id값을 파라미터로 받아오기
-      setTodos(todos =>
-        todos.map(todo => 
-          todo.id === id ? {...todo, checked: !todo.checked} : todo,
-          // console.log(todo))
-          // 파라미터로 받아온 id값과 todo의 값이 같다면 새로운 객체를 생성 -> true
-          // 같지않다면 원래 상태의 값을 반환 -> false
-        ),
-      );
+      dispatch({type: 'TOGGLE', id})
     },[]); 
 
   return (
