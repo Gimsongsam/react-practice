@@ -1,32 +1,25 @@
-import React, {useState, useEffect } from 'react';
-import useInputs from './useInputs';
+import React, {useReducer} from 'react';
+
+function reducer(state, action){
+    console.log("reducer(state): ",state)   // 이전의 상태 저장
+    console.log("reducer(action): ",action)  // 액션
+
+    return{
+        ...state,  // name의 프로퍼티 값만 설정을 해줄 경우 nickname의 프로퍼티는 날아가므로 스프레드 문법을 사용하여 받아온다.
+        [action.name]: action.value   // <input name="name" value="이름">
+    };
+}
 
 const Info = () => {
-    const [ state, onChange] = useInputs({
+    const [ state, dispatch ] = useReducer(reducer, {
         name: '',
         nickname: ''
-    });
-    const { name, nickname } = state;
-
-
-    // const [name, setName] = useState('');
-    // const [nickname, setNickname] = useState('');
-    // useEffect(() => {
-    //     console.log('effect');
-    //     console.log(name);
-    //     return () => {
-    //         console.log('unmount');
-    //     };
-    // }, []);
-
-    // const onChangeName = e => {
-    //     setName(e.target.value);
-    // };
-
-    // const onChangeNickname = e => {
-    //     setNickname(e.target.value);
-    // };
-
+    }); // reducer 함수를 받고, 초기값 설정
+    
+    const { name, nickname } = state;   // state에 저장되어 있는 name키와 nickname키
+    const onChange = e => {
+        dispatch(e.target);
+    };
 
     return (
         <div>
