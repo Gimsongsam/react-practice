@@ -19,7 +19,7 @@ function reducer(state, action){
 
 const Counter = () => {
 
-	const [state, dispatch] = useReducer(reducer, {value: 3}); // reducer 함수을 받아오고, 초기값을 설정해주기
+	const [state, dispatch] = useReducer(reducer, {value: 3}); // 받아온 reducer 함수와 초기값을 배열에 저장
     // reducer 함수를 통해 이전 값과 실행할 액션을 받고, 다시 새로운 상태로 반환 한다
 
 	return(
