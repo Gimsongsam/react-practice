@@ -12,7 +12,7 @@ const TodoInsert = ({onInsert}) => {
 
     const onSubmit = useCallback(
         e => {
-            onInsert(value);
+            onInsert(value); // onSubmit 함수가 실행하면 onInsert 함수를 호출한다. 파라미터로 value값을 보내준다.
             setValue(''); // value 값 초기화
 
             // submit 이벤트는 브라우저에서 새로고침을 발생시킵니다.
@@ -21,6 +21,9 @@ const TodoInsert = ({onInsert}) => {
         },
         [onInsert, value],
     );
+    
+    console.log("onInsert", onInsert)
+    console.log("onSubmit", onSubmit)
 
     return (
         <form className="TodoInsert" onSubmit={onSubmit}>
@@ -29,7 +32,7 @@ const TodoInsert = ({onInsert}) => {
                 value={value}
                 onChange={onChange} // onChange 함수 실행
             />
-            <button type="submit" onSubmit={onSubmit}>
+            <button type="submit">
                 <MdAdd />
             </button>
         </form>

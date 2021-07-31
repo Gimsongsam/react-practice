@@ -26,7 +26,9 @@ const TodoListItem = ({todo, onRemove, onToggle, style}) => { // 파라미터로
     );
 };
 
-export default React.memo(
-    TodoListItem,
-    (prevProps, nextProps) => prevProps.todo === nextProps.todo,
-);
+export default TodoListItem;
+
+// export default React.memo(
+//     TodoListItem,
+//     (prevProps, nextProps) => prevProps.todo === nextProps.todo,
+// );

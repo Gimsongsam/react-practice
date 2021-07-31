@@ -49,11 +49,12 @@ const App = () => {
       };
       dispatch({type: 'INSERT', todo});
       nextId.current += 1; // nextId 1씩 더하기
-      console.log(nextId) 
+
     },[]);
 
   const onRemove = useCallback(id => { // id를 파라미터로 가져오기
       dispatch({type: 'REMOVE', id})
+      console.log("onRemove", onRemove)
     },[]);
 
   // const onRemove = useCallback(
@@ -76,7 +77,7 @@ const App = () => {
     <TodoTemplate>
       <TodoInsert onInsert={onInsert} /> {/* onInsert 함수를 props 설정 */}
       <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} /> {/* TodoList에게 props로 전달해준다 */}
-      {console.log(todos)}
+      {/* {console.log(todos)} */}
       {/* {console.log(item)} */}
     </TodoTemplate>
     

@@ -14,6 +14,7 @@ const MyComponent = ({highlighted, theme}) => (
 const CSSModule2 = () => {
 
     // 자바스크립트 문법을 넣을 수 있다.
+    // return을 써주어야 한다.
 
     return (<div className={cx('wrapper', 'inverted')}>
             안녕하세요, 저는 <span className="something">CSS Module!</span>
@@ -26,6 +27,7 @@ const CSSModule2 = () => {
 const CSSModule = () => (
     
     // 자바스크립트 문법을 넣을 수 없다.
+    // return이 포함되어 있다.
 
     <div className={cx('wrapper', 'inverted')}>
         안녕하세요, 저는 <span className="something">CSS Module!</span>

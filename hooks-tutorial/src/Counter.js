@@ -1,7 +1,7 @@
 import React, {useReducer} from 'react';
 
 function reducer(state, action){
-    console.log("recuder 함수:", state);   // 이전의 상태
+    console.log("reducer 함수:", state);   // 이전의 상태
     console.log(action);  // 실행해야 할 액션값을 저장
 	// action.type에 따라 다른 작업 수행
     console.log(action.type)   // INCREMENT, DECREMENT
@@ -20,7 +20,8 @@ function reducer(state, action){
 const Counter = () => {
 
 	const [state, dispatch] = useReducer(reducer, {value: 3}); // 받아온 reducer 함수와 초기값을 배열에 저장
-    // reducer 함수를 통해 이전 값과 실행할 액션을 받고, 다시 새로운 상태로 반환 한다
+    // reducer 함수를 통해 이전 값과 실행할 액션을 받고, 다시 새로운 상태로 반환한다
+	// == 불변성을 지킨다.
 
 	return(
 		<div>
