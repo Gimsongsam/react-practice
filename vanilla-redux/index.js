@@ -47,6 +47,7 @@ function reducer(state = initialState, action){
 }
 
 const store = createStore(reducer);
+console.log(store)
 
 // 상태가 업데이트될 때마다 호출
 // html을 사용하여 만들어진 UI의 속성을 상태에 따라 변경해준다.
@@ -64,10 +65,10 @@ const render = () => {
 
 render();
 
-store.subscribe(render);
+console.log(store.subscribe(render)); // render 함수가 store를 구독
 
 divToggle.onclick = () => {
-    store.dispatch(toggleSwitch());
+    store.dispatch(toggleSwitch());  // toggleSwitch 액션 실행
 };
 btnIncrease.onclick = () => {
     store.dispatch(increase(1));

@@ -12,6 +12,18 @@ class App extends Component{
     color: '#00000'
   }
 
+  componentDidMount(){
+    console.log('componentDidMount');
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot){
+    console.log('componentDidUpdate', prevProps, prevState);
+    if(snapshot){
+        console.log('업데이트되기 직전 색상: ', snapshot);
+    }
+  }
+
+
   handleClick = () => {
     this.setState({
       color: getRandomColor()
@@ -19,6 +31,7 @@ class App extends Component{
   }
 
   render() {
+    console.log('render')
     return (
       <div>
         <button onClick={this.handleClick}>랜덤 색상</button>
